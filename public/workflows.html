@@ -1,0 +1,641 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Animated use-case and workflow guide for the TRUE GEO ENGINE browser WebMCP workspace." />
+  <title>TRUE GEO ENGINE — Animated Workflow Guide</title>
+  <style>
+    :root {
+      --ink: #10233f;
+      --muted: #5d718c;
+      --line: #dbe8f7;
+      --blue: #2563eb;
+      --blue-2: #0ea5e9;
+      --blue-soft: #eef6ff;
+      --cyan: #67e8f9;
+      --green: #059669;
+      --amber: #d97706;
+      --rose: #e11d48;
+      --white: #ffffff;
+      --shadow: 0 22px 60px rgba(42, 91, 153, .13);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% -8%, rgba(103,232,249,.22), transparent 28rem),
+        radial-gradient(circle at 95% 6%, rgba(37,99,235,.12), transparent 32rem),
+        #f7fbff;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+
+    button, input, select, textarea { font: inherit; }
+    [hidden] { display: none !important; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    a { color: inherit; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      min-height: 64px;
+      padding: 10px clamp(16px, 4vw, 58px);
+      border-bottom: 1px solid rgba(219,232,247,.9);
+      background: rgba(255,255,255,.87);
+      backdrop-filter: blur(18px);
+    }
+
+    .site-logo { display: flex; align-items: center; gap: 11px; font-weight: 800; letter-spacing: -.025em; }
+    .site-logo-mark {
+      display: grid;
+      width: 34px;
+      height: 34px;
+      place-items: center;
+      border-radius: 11px;
+      color: white;
+      background: linear-gradient(135deg, var(--blue), var(--blue-2));
+      box-shadow: 0 9px 22px rgba(37,99,235,.24);
+    }
+    .site-logo small { display: block; color: var(--muted); font-size: 9px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
+    .site-logo-accent { color: var(--blue); }
+
+    .topnav { display: flex; margin-left: auto; gap: 4px; }
+    .topnav a {
+      padding: 8px 10px;
+      border-radius: 9px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 650;
+      text-decoration: none;
+    }
+    .topnav a:hover, .topnav a:focus-visible { color: var(--blue); background: var(--blue-soft); outline: none; }
+    .app-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      margin-left: 6px;
+      padding: 9px 13px;
+      border-radius: 10px;
+      color: white;
+      background: var(--blue);
+      font-size: 12px;
+      font-weight: 750;
+      text-decoration: none;
+    }
+
+    .shell { width: min(1180px, calc(100% - 30px)); margin: 0 auto; }
+    .hero { display: grid; gap: 34px; grid-template-columns: 1.08fr .92fr; padding: 72px 0 42px; align-items: center; }
+    .kicker { display: inline-flex; align-items: center; gap: 8px; color: var(--blue); font-size: 11px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+    .kicker::before { content: ""; width: 24px; height: 2px; background: linear-gradient(90deg, var(--blue), var(--cyan)); }
+    h1 { max-width: 780px; margin: 15px 0 18px; font-size: clamp(38px, 6vw, 68px); line-height: 1.02; letter-spacing: -.055em; }
+    h1 span { color: var(--blue); }
+    .lede { max-width: 700px; margin: 0; color: var(--muted); font-size: clamp(16px, 2vw, 19px); }
+    .hero-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+    .badge { padding: 7px 10px; border: 1px solid var(--line); border-radius: 999px; color: #3d5878; background: rgba(255,255,255,.75); font-size: 11px; font-weight: 700; }
+
+    .config-card, .panel {
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: rgba(255,255,255,.9);
+      box-shadow: var(--shadow);
+    }
+    .config-card { position: relative; overflow: hidden; padding: 22px; }
+    .config-card::after {
+      content: "";
+      position: absolute;
+      top: -70px;
+      right: -70px;
+      width: 190px;
+      height: 190px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(103,232,249,.22), transparent 70%);
+      pointer-events: none;
+    }
+    .config-title { margin: 0; font-size: 14px; }
+    .config-sub { margin: 5px 0 18px; color: var(--muted); font-size: 12px; }
+    .field { display: grid; gap: 6px; margin-top: 12px; }
+    .field label { color: #516986; font-size: 10px; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; }
+    .field input, .field select, .field textarea {
+      width: 100%;
+      height: 42px;
+      padding: 0 12px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      color: var(--ink);
+      background: #f8fbff;
+      outline: none;
+    }
+    .field textarea { min-height: 74px; padding-top: 10px; resize: vertical; }
+    .field input:focus, .field select:focus, .field textarea:focus { border-color: #8ab6fa; box-shadow: 0 0 0 3px rgba(37,99,235,.1); }
+    .guide-run-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: stretch; }
+    .guide-run-row .primary-btn { min-width: 112px; margin-top: 12px; }
+    #guide-prompt-fields .field textarea { min-height: 92px; font-size: 15px; line-height: 1.55; }
+    .config-result { display: flex; align-items: center; gap: 10px; margin-top: 17px; padding: 12px; border-radius: 13px; background: var(--blue-soft); color: #315478; font-size: 11px; }
+    .pulse-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 0 rgba(5,150,105,.35); animation: pulse 2s infinite; }
+
+    section { scroll-margin-top: 82px; }
+    .section { padding: 44px 0; }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 22px; }
+    .eyebrow { margin: 0 0 7px; color: var(--blue); font-size: 10px; font-weight: 850; letter-spacing: .15em; text-transform: uppercase; }
+    h2 { margin: 0; font-size: clamp(25px, 4vw, 38px); line-height: 1.12; letter-spacing: -.035em; }
+    .section-head > p { max-width: 540px; margin: 0; color: var(--muted); font-size: 13px; }
+
+    .journey { padding: 25px; }
+    .journey-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .journey-status { display: flex; align-items: center; gap: 7px; color: var(--green); font-size: 11px; font-weight: 750; }
+    .journey-controls { display: flex; gap: 7px; }
+    .icon-btn, .primary-btn {
+      display: inline-flex;
+      min-height: 38px;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      color: #3a5575;
+      background: white;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 750;
+    }
+    .icon-btn { width: 38px; }
+    .primary-btn { padding: 0 14px; color: white; border-color: var(--blue); background: var(--blue); }
+    .icon-btn:hover, .icon-btn:focus-visible { border-color: #9fc2f6; color: var(--blue); outline: none; }
+    .primary-btn:hover, .primary-btn:focus-visible { background: #1d4ed8; outline: none; }
+    .progress-track { height: 5px; margin: 20px 0 24px; overflow: hidden; border-radius: 99px; background: #e7f0fb; }
+    .progress-fill { height: 100%; width: 14.285%; border-radius: inherit; background: linear-gradient(90deg, var(--blue), var(--cyan)); transition: width .55s cubic-bezier(.2,.8,.2,1); }
+    .journey-grid { display: grid; gap: 16px; grid-template-columns: .76fr 1.24fr; }
+    .step-list { display: grid; gap: 8px; }
+    .step-button {
+      display: grid;
+      grid-template-columns: 31px 1fr;
+      gap: 10px;
+      width: 100%;
+      padding: 11px;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      color: var(--muted);
+      background: transparent;
+      cursor: pointer;
+      text-align: left;
+      transition: .25s ease;
+    }
+    .step-button:hover { background: #f6faff; }
+    .step-button.active { border-color: #bfdbfe; color: var(--ink); background: var(--blue-soft); transform: translateX(4px); }
+    .step-number { display: grid; width: 31px; height: 31px; place-items: center; border: 1px solid var(--line); border-radius: 10px; background: white; font-size: 10px; font-weight: 850; }
+    .step-button.active .step-number { border-color: var(--blue); color: white; background: var(--blue); }
+    .step-button b { display: block; font-size: 12px; }
+    .step-button small { display: block; margin-top: 2px; font-size: 9px; }
+    .stage {
+      position: relative;
+      display: grid;
+      min-height: 390px;
+      overflow: hidden;
+      place-items: center;
+      padding: 28px;
+      border: 1px solid #cfe1f6;
+      border-radius: 18px;
+      background:
+        linear-gradient(rgba(255,255,255,.78), rgba(255,255,255,.9)),
+        radial-gradient(circle at 50% 35%, rgba(103,232,249,.32), transparent 42%);
+    }
+    .stage::before {
+      content: "";
+      position: absolute;
+      inset: 20px;
+      border: 1px dashed rgba(37,99,235,.18);
+      border-radius: 50%;
+      animation: rotate 22s linear infinite;
+    }
+    .stage-card { position: relative; z-index: 2; width: min(100%, 440px); padding: 24px; border: 1px solid var(--line); border-radius: 18px; background: white; box-shadow: 0 18px 55px rgba(37,99,235,.13); animation: rise .48s ease both; }
+    .stage-icon { display: grid; width: 44px; height: 44px; place-items: center; border-radius: 14px; color: white; background: linear-gradient(135deg, var(--blue), var(--blue-2)); font-size: 18px; box-shadow: 0 10px 24px rgba(37,99,235,.22); }
+    .stage-card h3 { margin: 17px 0 7px; font-size: 20px; letter-spacing: -.025em; }
+    .stage-card p { margin: 0; color: var(--muted); font-size: 12px; }
+    .stage-output { margin-top: 18px; padding: 13px; border: 1px solid #d6e7fa; border-radius: 12px; color: #355878; background: #f2f8ff; font-size: 11px; }
+    .stage-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+    .stage-meta span { padding: 5px 7px; border-radius: 7px; color: #42627e; background: #f2f6fb; font-size: 9px; font-weight: 750; }
+
+    .use-grid { display: grid; gap: 14px; grid-template-columns: repeat(4, 1fr); }
+    .use-card {
+      position: relative;
+      min-height: 210px;
+      overflow: hidden;
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255,255,255,.9);
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    }
+    .use-card:hover { transform: translateY(-5px); border-color: #b8d2f4; box-shadow: var(--shadow); }
+    .use-index { color: #87a0bc; font-size: 10px; font-weight: 850; letter-spacing: .12em; }
+    .use-icon { display: grid; width: 37px; height: 37px; margin: 18px 0 14px; place-items: center; border-radius: 11px; color: var(--blue); background: var(--blue-soft); font-size: 16px; }
+    .use-card h3 { margin: 0; font-size: 14px; }
+    .use-card p { margin: 8px 0 0; color: var(--muted); font-size: 11px; }
+    .use-card .result { position: absolute; right: 18px; bottom: 16px; left: 18px; color: var(--green); font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; }
+
+    .tabbar { display: flex; gap: 6px; overflow-x: auto; padding: 6px; border: 1px solid var(--line); border-radius: 14px; background: #f1f7fe; }
+    .tab {
+      flex: 1;
+      min-width: 145px;
+      padding: 10px 13px;
+      border: 0;
+      border-radius: 10px;
+      color: var(--muted);
+      background: transparent;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 750;
+    }
+    .tab.active { color: var(--blue); background: white; box-shadow: 0 6px 16px rgba(42,91,153,.1); }
+    .mode-pills { display: flex; gap: 5px; margin: 14px 0; padding: 4px; border: 1px solid var(--line); border-radius: 999px; background: #f1f7fe; }
+    .mode-choice { flex: 1; padding: 8px 10px; border: 0; border-radius: 999px; color: var(--muted); background: transparent; cursor: pointer; font-size: 10px; font-weight: 800; }
+    .mode-choice.active { color: white; background: var(--blue); box-shadow: 0 6px 16px rgba(37,99,235,.2); }
+    .workflow-panel { display: none; padding: 25px; }
+    .workflow-panel.active { display: block; animation: rise .38s ease both; }
+    .workflow-summary { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; }
+    .workflow-summary h3 { margin: 0; font-size: 19px; }
+    .workflow-summary p { max-width: 670px; margin: 7px 0 0; color: var(--muted); font-size: 12px; }
+    .time-pill { flex: none; padding: 7px 9px; border-radius: 999px; color: var(--blue); background: var(--blue-soft); font-size: 10px; font-weight: 800; }
+    .flow { display: grid; gap: 11px; grid-template-columns: repeat(5, 1fr); margin-top: 24px; }
+    .flow-step { position: relative; padding: 15px; border: 1px solid var(--line); border-radius: 13px; background: #fbfdff; }
+    .flow-step:not(:last-child)::after { content: "→"; position: absolute; top: 50%; right: -10px; z-index: 2; color: var(--blue); font-weight: 900; transform: translateY(-50%); }
+    .flow-step span { color: var(--blue); font-size: 9px; font-weight: 850; letter-spacing: .1em; }
+    .flow-step b { display: block; margin-top: 7px; font-size: 11px; }
+    .flow-step small { display: block; margin-top: 5px; color: var(--muted); font-size: 9px; }
+
+    .surface-grid { display: grid; gap: 12px; grid-template-columns: repeat(5, 1fr); }
+    .surface { padding: 18px; border: 1px solid var(--line); border-radius: 16px; background: white; }
+    .surface b { display: block; font-size: 12px; }
+    .surface p { margin: 7px 0 0; color: var(--muted); font-size: 10px; }
+    .surface::before { content: ""; display: block; width: 28px; height: 3px; margin-bottom: 14px; border-radius: 5px; background: linear-gradient(90deg, var(--blue), var(--cyan)); }
+
+    .tool-table { overflow-x: auto; border: 1px solid var(--line); border-radius: 18px; background: white; box-shadow: var(--shadow); }
+    table { width: 100%; min-width: 820px; border-collapse: collapse; text-align: left; }
+    th { padding: 13px 16px; color: #607792; background: #f4f8fd; font-size: 9px; letter-spacing: .1em; text-transform: uppercase; }
+    td { padding: 15px 16px; border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; vertical-align: top; }
+    td:first-child { color: var(--ink); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-weight: 700; }
+    code { padding: 2px 5px; border-radius: 5px; color: #315b8b; background: var(--blue-soft); font-size: 9px; }
+    .mode { display: inline-flex; padding: 4px 6px; border-radius: 6px; font-size: 8px; font-weight: 850; letter-spacing: .08em; text-transform: uppercase; }
+    .mode.read { color: #0f766e; background: #ecfdf5; }
+    .mode.write { color: #1d4ed8; background: #eff6ff; }
+    .mode.download { color: #1d4ed8; background: #eff6ff; }
+
+    .guardrail-grid { display: grid; gap: 14px; grid-template-columns: repeat(3, 1fr); }
+    .guardrail { padding: 20px; border: 1px solid var(--line); border-radius: 17px; background: white; }
+    .guardrail-icon { color: var(--green); font-size: 21px; }
+    .guardrail h3 { margin: 12px 0 6px; font-size: 13px; }
+    .guardrail p { margin: 0; color: var(--muted); font-size: 11px; }
+
+    .cta { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin: 44px 0 70px; padding: 28px; border: 1px solid #bcd7f8; border-radius: 22px; color: #173a66; background: linear-gradient(135deg, #e9f4ff, #f9fdff 60%, #e5fbff); }
+    .cta h2 { font-size: 27px; }
+    .cta p { margin: 7px 0 0; color: #55718f; font-size: 12px; }
+    .cta-actions { display: flex; flex: none; gap: 8px; }
+    .cta a { min-height: 42px; padding: 0 15px; display: inline-flex; align-items: center; border: 1px solid #b9d2f3; border-radius: 11px; color: var(--blue); background: white; font-size: 11px; font-weight: 800; text-decoration: none; }
+    .cta a.primary { color: white; border-color: var(--blue); background: var(--blue); }
+
+    footer { padding: 20px 0 34px; border-top: 1px solid var(--line); color: var(--muted); font-size: 10px; }
+    footer .shell { display: flex; justify-content: space-between; gap: 16px; }
+
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    @keyframes pulse { 70% { box-shadow: 0 0 0 8px rgba(5,150,105,0); } 100% { box-shadow: 0 0 0 0 rgba(5,150,105,0); } }
+    @keyframes rotate { to { transform: rotate(360deg); } }
+    @keyframes rise { from { opacity: 0; transform: translateY(12px) scale(.985); } to { opacity: 1; transform: none; } }
+
+    @media (max-width: 980px) {
+      .hero, .journey-grid { grid-template-columns: 1fr; }
+      .hero { padding-top: 48px; }
+      .use-grid { grid-template-columns: repeat(2, 1fr); }
+      .flow { grid-template-columns: repeat(2, 1fr); }
+      .flow-step:not(:last-child)::after { display: none; }
+      .surface-grid { grid-template-columns: repeat(2, 1fr); }
+      .guardrail-grid { grid-template-columns: 1fr; }
+      .topnav { display: none; }
+      .app-link { margin-left: auto; }
+    }
+
+    @media (max-width: 620px) {
+      .shell { width: min(100% - 22px, 1180px); }
+      .topbar { padding-inline: 12px; }
+      .site-logo small { display: none; }
+      .app-link { padding-inline: 10px; }
+      .app-link span { display: none; }
+      .hero { padding-top: 36px; }
+      .use-grid, .surface-grid, .flow { grid-template-columns: 1fr; }
+      .section-head, .workflow-summary, .cta { align-items: flex-start; flex-direction: column; }
+      .journey { padding: 15px; }
+      .stage { min-height: 340px; padding: 16px; }
+      .cta-actions { width: 100%; flex-wrap: wrap; }
+      .guide-run-row { grid-template-columns: 1fr; }
+      .guide-run-row .primary-btn { min-height: 44px; margin-top: 0; }
+      footer .shell { flex-direction: column; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="site-logo">
+      <span class="site-logo-mark" aria-hidden="true">⌁</span>
+      <span>TRUE <span class="site-logo-accent">GEO ENGINE</span><small>Animated workflow guide</small></span>
+    </div>
+    <nav class="topnav" aria-label="Guide sections">
+      <a href="#journey">Journey</a>
+      <a href="#use-cases">Use cases</a>
+      <a href="#workflows">Workflows</a>
+      <a href="#tools">WebMCP tools</a>
+      <a href="#safety">Safety</a>
+    </nav>
+    <a class="app-link" href="/" aria-label="Open TRUE GEO ENGINE workspace"><span>Open workspace</span> ↗</a>
+  </header>
+
+  <main>
+    <div class="shell">
+      <section class="hero">
+        <div>
+          <span class="kicker">GEO / AEO WebMCP challenge</span>
+          <h1>Measure pages and prompts through <span>an LLM’s eyes.</span></h1>
+          <p class="lede">A complete, animated guide to page-level AI visibility, URL-independent prompt runs, answer-engine scoring, source HTML auditing, and downloadable GEO/AEO evidence.</p>
+          <div class="hero-badges">
+            <span class="badge">8 WebMCP tools</span>
+            <span class="badge">5 product surfaces</span>
+            <span class="badge">Any answer engine</span>
+            <span class="badge">Download only · no publishing</span>
+          </div>
+        </div>
+
+        <aside class="config-card" aria-labelledby="configure-title">
+          <h2 class="config-title" id="configure-title">Personalize this guide</h2>
+          <p class="config-sub" id="guide-config-sub">Choose AI Visibility, enter one public page URL, and run it.</p>
+          <div class="mode-pills" aria-label="Run modes"><button class="mode-choice active" data-guide-mode="visibility" type="button">AI Visibility</button><button class="mode-choice" data-guide-mode="prompt" type="button">Run a Prompt</button></div>
+          <div class="guide-run-row">
+            <div id="guide-visibility-fields">
+              <div class="field">
+                <label for="page-input">Page URL</label>
+                <input id="page-input" value="https://example.com/page" maxlength="500" inputmode="url" />
+              </div>
+            </div>
+            <div id="guide-prompt-fields" hidden>
+              <div class="field"><label for="prompt-input">Choose a curated benchmark prompt</label><select id="prompt-input"><option>How is Northstar Motors positioned for family SUV reliability, ownership value, and safety compared with alternatives?</option><option>Should an enterprise choose Meridian Cloud for a regulated workload, and what security, migration, and cost risks matter?</option><option>How well does Harbor Bank serve a growing small business on fees, cash-flow tools, support, and lending access?</option><option>Is Everwell Health a trustworthy virtual-care option for ongoing primary care, and what access, privacy, and continuity trade-offs matter?</option></select></div>
+            </div>
+            <button class="primary-btn" id="guide-run-button" type="button">Run AI visibility →</button>
+          </div>
+          <div class="config-result" aria-live="polite"><span class="pulse-dot"></span><span><b data-target>example.com/page</b> <span id="guide-result-suffix">is ready for a synthetic demo.</span></span></div>
+        </aside>
+      </section>
+
+      <section class="section reveal" id="journey">
+        <div class="section-head">
+          <div><p class="eyebrow">Interactive walkthrough</p><h2>The complete end-to-end journey</h2></div>
+          <p>Play the journey automatically or choose any step. Each stage maps directly to a visible dashboard action and a WebMCP capability.</p>
+        </div>
+        <div class="panel journey">
+          <div class="journey-top">
+            <span class="journey-status"><span class="pulse-dot"></span><span id="journey-state">Step 1 of 7</span></span>
+            <div class="journey-controls">
+              <button class="icon-btn" id="previous-step" type="button" aria-label="Previous workflow step">←</button>
+              <button class="primary-btn" id="play-journey" type="button" aria-pressed="false">▶ Play journey</button>
+              <button class="icon-btn" id="next-step" type="button" aria-label="Next workflow step">→</button>
+            </div>
+          </div>
+          <div class="progress-track" aria-hidden="true"><div class="progress-fill" id="progress-fill"></div></div>
+          <div class="journey-grid">
+            <div class="step-list" id="step-list" aria-label="Workflow steps"></div>
+            <div class="stage" aria-live="polite"><div class="stage-card" id="stage-card"></div></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section reveal" id="use-cases">
+        <div class="section-head">
+          <div><p class="eyebrow">Complete capability set</p><h2>Ten core use cases</h2></div>
+          <p>TRUE GEO ENGINE supports direct workspace exploration and conversational WebMCP execution while keeping the same shared state.</p>
+        </div>
+        <div class="use-grid">
+          <article class="use-card"><span class="use-index">UC 01</span><span class="use-icon">◎</span><h3>Enter one page URL</h3><p>No domain, company, market, JSON or evidence fields are required.</p><span class="result">Outcome · instant page context</span></article>
+          <article class="use-card"><span class="use-index">UC 02</span><span class="use-icon">◫</span><h3>Run AI visibility</h3><p>Click the AI Visibility pill and generate a deterministic URL-scoped synthetic Human-vs-AI audit.</p><span class="result">Outcome · automatic demo score</span></article>
+          <article class="use-card"><span class="use-index">UC 03</span><span class="use-icon">⌁</span><h3>Run one prompt</h3><p>Select one fictional benchmark prompt—never a page URL or model choice—to see four engine answers, citations, the complete score, gaps and next steps.</p><span class="result">Outcome · deterministic prompt evidence</span></article>
+          <article class="use-card"><span class="use-index">UC 04</span><span class="use-icon">⇄</span><h3>Compare AI perspectives</h3><p>Score four deterministic simulated perspectives for GPTBot, Googlebot, PerplexityBot and ClaudeBot.</p><span class="result">Outcome · distinct synthetic evidence</span></article>
+          <article class="use-card"><span class="use-index">UC 05</span><span class="use-icon">◔</span><h3>Read one visibility score</h3><p>Review the complete score appropriate to the active evidence: a synthetic URL scenario or a curated prompt benchmark.</p><span class="result">Outcome · complete demo baseline</span></article>
+          <article class="use-card"><span class="use-index">UC 06</span><span class="use-icon">◉</span><h3>Read answer-engine scores</h3><p>See four URL-scoped simulated crawler perspectives or four distinct benchmark answers in the same Answer Engine Scores tab.</p><span class="result">Outcome · engine-level diagnosis</span></article>
+          <article class="use-card"><span class="use-index">UC 07</span><span class="use-icon">⌕</span><h3>Trace content gaps</h3><p>Connect each missed high-intent answer to observation counts, engines, sources and topic.</p><span class="result">Outcome · explainable priority</span></article>
+          <article class="use-card"><span class="use-index">UC 08</span><span class="use-icon">✦</span><h3>Generate next-step artifacts</h3><p>Both flows create llms.txt, FAQs, FAQPage JSON-LD/schema and preview. Page runs use the exact URL; prompt runs use the benchmark's automatically selected target page.</p><span class="result">Outcome · synchronized outputs</span></article>
+          <article class="use-card"><span class="use-index">UC 09</span><span class="use-icon">⇩</span><h3>Export tools and files</h3><p>Export the WebMCP manifest, download 16 URL-scoped synthetic page files, or download 16 prompt-led implementation and evidence files.</p><span class="result">Outcome · reusable implementation bundle</span></article>
+          <article class="use-card"><span class="use-index">UC 10</span><span class="use-icon">◌</span><h3>Direct the agent</h3><p>Run visibility, test prompts, explain, generate and download through the same WebMCP workspace.</p><span class="result">Outcome · shared workspace state</span></article>
+        </div>
+      </section>
+
+      <section class="section reveal" id="workflows">
+        <div class="section-head">
+          <div><p class="eyebrow">End-to-end paths</p><h2>Four complete workflows</h2></div>
+          <p>Page visibility and prompt analysis remain independent inputs while sharing the same score, gap, next-step and activity surfaces.</p>
+        </div>
+        <div class="tabbar" role="tablist" aria-label="Workflow views">
+          <button class="tab active" role="tab" aria-selected="true" data-tab="setup">New workspace</button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="recovery">Measure visibility</button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="executive">Gap to package</button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="agent">Agent workflow</button>
+        </div>
+        <div class="panel workflow-panel active" data-panel="setup">
+          <div class="workflow-summary"><div><h3>Launch a one-URL, brand-agnostic workspace</h3><p>Choose AI Visibility, enter the exact public page URL and click the button beside it. No uploads or additional configuration appear.</p></div><span class="time-pill">One click</span></div>
+          <div class="flow"><div class="flow-step"><span>01</span><b>Choose pill</b><small>AI Visibility</small></div><div class="flow-step"><span>02</span><b>Enter page URL</b><small>One required field</small></div><div class="flow-step"><span>03</span><b>Run visibility</b><small>One button</small></div><div class="flow-step"><span>04</span><b>Generate scenario</b><small>Synthetic source + hydration</small></div><div class="flow-step"><span>05</span><b>Read scores</b><small>Overall + engines</small></div></div>
+        </div>
+        <div class="panel workflow-panel" data-panel="recovery">
+          <div class="workflow-summary"><div><h3>Replay one curated prompt without a page URL</h3><p>Choose Run a Prompt, select a fictional cross-industry scenario, and use the button beside it. Four engine perspectives and six sentiment dimensions populate every shared result tab without an API key.</p></div><span class="time-pill">API-free</span></div>
+          <div class="flow"><div class="flow-step"><span>01</span><b>Choose pill</b><small>Run a Prompt</small></div><div class="flow-step"><span>02</span><b>Select scenario</b><small>Eight industries</small></div><div class="flow-step"><span>03</span><b>Run prompt</b><small>Adjacent button</small></div><div class="flow-step"><span>04</span><b>Replay evidence</b><small>4 engines × 6 topics</small></div><div class="flow-step"><span>05</span><b>Read all tabs</b><small>Score · engines · gaps · next steps</small></div></div>
+        </div>
+        <div class="panel workflow-panel" data-panel="executive">
+          <div class="workflow-summary"><div><h3>Turn one synthetic gap into a review package</h3><p>The URL-scoped scenario supplies demonstration evidence, so draft JSON-LD, preview and download files are ready without another form. Verify every file against the real page.</p></div><span class="time-pill">Automatic</span></div>
+          <div class="flow"><div class="flow-step"><span>01</span><b>Run visibility</b><small>Synthetic raw + hydrated</small></div><div class="flow-step"><span>02</span><b>Choose gap</b><small>Rank simulated hidden blocks</small></div><div class="flow-step"><span>03</span><b>Review content</b><small>Synthetic draft evidence</small></div><div class="flow-step"><span>04</span><b>Preview JSON-LD</b><small>Review-required draft</small></div><div class="flow-step"><span>05</span><b>Download all</b><small>Receive 16 files</small></div></div>
+        </div>
+        <div class="panel workflow-panel" data-panel="agent">
+          <div class="workflow-summary"><div><h3>Complete the same journey through conversation</h3><p>The agent can invoke the same eight exported WebMCP tools, while every result remains visible in the shared workspace.</p></div><span class="time-pill">Conversational</span></div>
+          <div class="flow"><div class="flow-step"><span>01</span><b>Run visibility</b><small><code>page_url</code> only here</small></div><div class="flow-step"><span>02</span><b>Run prompt</b><small><code>prompt</code> only here</small></div><div class="flow-step"><span>03</span><b>Explain</b><small>Open next step</small></div><div class="flow-step"><span>04</span><b>List tools</b><small>Export manifest</small></div><div class="flow-step"><span>05</span><b>Download</b><small>Run-specific ZIP</small></div></div>
+        </div>
+      </section>
+
+      <section class="section reveal">
+        <div class="section-head">
+          <div><p class="eyebrow">Product navigation</p><h2>Five connected workspace surfaces</h2></div>
+          <p>Every surface reads from and writes to the same workspace state, so there is no handoff gap between analysis, action and audit.</p>
+        </div>
+        <div class="surface-grid">
+          <article class="surface"><b>AI visibility</b><p>Page mode shows the exact Human vs AI block audit; prompt mode shows the prompt-specific score and four distinct answers.</p></article>
+          <article class="surface"><b>Answer engine scores</b><p>Per-engine or per-model scores plus the scored prompts or answer dimensions.</p></article>
+          <article class="surface"><b>Content gaps</b><p>Ranked opportunities with cause, evidence, confidence and safest recovery.</p></article>
+          <article class="surface"><b>Next steps</b><p>Page runs provide grounded implementation artifacts; prompt runs provide answer improvements and an evidence ZIP.</p></article>
+          <article class="surface"><b>Agent activity</b><p>Chronological tool calls, generated outputs, downloads and evidence state.</p></article>
+        </div>
+      </section>
+
+      <section class="section reveal" id="tools">
+        <div class="section-head">
+          <div><p class="eyebrow">WebMCP contract</p><h2>All eight agent tools</h2></div>
+          <p>These browser-native tools let an AI agent operate the same workspace the human sees. Tools calculate, generate and download; none publish to the target page.</p>
+        </div>
+        <div class="tool-table">
+          <table>
+            <thead><tr><th>Tool</th><th>Mode</th><th>When it is used</th><th>Key input</th><th>Visible result</th></tr></thead>
+            <tbody>
+              <tr><td>geo_ai_visibility_audit</td><td><span class="mode write">Write</span></td><td>Compare deterministic synthetic raw and hydrated HTML scoped to a URL.</td><td><code>page_url</code></td><td>Aligned Human vs AI blocks, signals, engine scores, gaps and a synthetic disclosure appear.</td></tr>
+              <tr><td>geo_analyze_prompt</td><td><span class="mode write">Write</span></td><td>Replay one exact prompt from the bundled benchmark.</td><td><code>prompt</code></td><td>Four distinct answers, citations, scores, gaps and next steps appear.</td></tr>
+              <tr><td>geo_visibility_overview</td><td><span class="mode read">Read</span></td><td>Answer a quick status or overview question.</td><td>No required input</td><td>The latest score and top gap return.</td></tr>
+              <tr><td>geo_list_tools</td><td><span class="mode read">Read</span></td><td>Discover or reuse the full WebMCP surface.</td><td>No required input</td><td>The versioned manifest and schemas return.</td></tr>
+              <tr><td>geo_content_gaps</td><td><span class="mode read">Read</span></td><td>Understand why a high-intent answer is weak.</td><td><code>gap_id</code></td><td>The evidence-derived content gap opens.</td></tr>
+              <tr><td>geo_generate_next_steps</td><td><span class="mode write">Write</span></td><td>Turn a diagnosed gap into usable outputs.</td><td><code>gap_id</code></td><td>Content, JSON-LD and matching preview are generated.</td></tr>
+              <tr><td>geo_download_package</td><td><span class="mode download">Download</span></td><td>Collect every generated implementation artifact.</td><td>No required input</td><td>Page runs download 16 URL-scoped synthetic files; prompt runs download 16 target-specific implementation and evidence files.</td></tr>
+              <tr><td>geo_export_action_plan</td><td><span class="mode read">Read</span></td><td>Share priorities or continue work in another system.</td><td><code>format</code></td><td>A machine-readable plan and package state return.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section reveal" id="safety">
+        <div class="section-head">
+          <div><p class="eyebrow">Trust model</p><h2>Evidence-controlled by design</h2></div>
+          <p>The system accelerates measurement and preparation without silently inventing scores, claims or writes to the target site.</p>
+        </div>
+        <div class="guardrail-grid">
+          <article class="guardrail"><span class="guardrail-icon">✓</span><h3>Evidence boundary</h3><p>Generated copy stays inside the reconciled source set. Missing facts remain missing instead of being inferred as product claims.</p></article>
+          <article class="guardrail"><span class="guardrail-icon">◉</span><h3>No publishing surface</h3><p>The agent can analyze, generate and download. No tool writes content or structured data to the target site.</p></article>
+          <article class="guardrail"><span class="guardrail-icon">↺</span><h3>Complete audit trail</h3><p>URL scans, prompt runs, calculations, artifact generation and downloads stay visible in activity.</p></article>
+        </div>
+      </section>
+
+      <section class="cta reveal">
+        <div><h2>Ready to use the synthetic workspace?</h2><p>Open TRUE GEO ENGINE to run the quota-free interactive GEO/AEO demo, or download the complete source package.</p></div>
+        <div class="cta-actions"><a href="/TRUE-GEO-ENGINE-WebMCP-source.zip" download>Download source</a><a class="primary" href="/">Open TRUE GEO ENGINE ↗</a></div>
+      </section>
+    </div>
+  </main>
+
+  <footer><div class="shell"><span>TRUE GEO ENGINE · brand-agnostic page and prompt GEO/AEO workspace</span><span>Animated workflow guide · <span id="year"></span></span></div></footer>
+
+  <script>
+    const steps = [
+      { title: "Choose a mode", short: "AI Visibility or Run a Prompt", icon: "◎", body: "The two pills keep the experiences separate. Only the selected mode's controls and results appear.", output: "Selected mode is ready for {target}.", meta: ["Two explicit pills", "No mixed results", "Brand agnostic"] },
+      { title: "Provide the active input", short: "Page URL or curated prompt", icon: "⌁", body: "AI Visibility accepts one public page URL. Run a Prompt accepts one selection from the bundled fictional catalog; it never shows or sends a page URL or model choice.", output: "The selected workflow input is configured for {target}.", meta: ["Separate inputs", "No upload", "No JSON"] },
+      { title: "Run AI visibility", short: "Compare synthetic human and AI page views", icon: "◫", body: "The entered URL deterministically generates simulated raw HTML and a simulated hydrated page without any external request. One master block list is shown in both columns, with hydration-only text clearly marked as not visible to AI.", output: "Aligned Human vs AI blocks, simulated source signals and four crawler perspectives are ready.", meta: ["Synthetic raw HTML", "Synthetic hydrated DOM", "Exact block order"] },
+      { title: "Run a prompt", short: "Replay the curated benchmark", icon: "⇄", body: "The separate prompt mode loads four answer engines and six sentiment dimensions from bundled JSON. The selected brand and evidence calculate visibility, engine scores, gaps and next steps.", output: "Prompt-and-brand result ready with no API call or page URL.", meta: ["192 evidence rows", "No API key", "Complete shared tabs"] },
+      { title: "Read scores", short: "See overview and engines", icon: "◔", body: "Review the overall AI visibility score, transparent components and a separate score for each supported answer engine.", output: "Overall score and engine scores ready for {target}.", meta: ["One overview score", "Engine breakdown", "No sample values"] },
+      { title: "Review next steps", short: "See content, JSON-LD and preview", icon: "✦", body: "Page mode uses the exact scanned URL. Prompt mode automatically selects the curated benchmark target. Both produce synchronized llms.txt, FAQs, FAQPage JSON-LD/schema and preview files.", output: "Content generated · JSON-LD synchronized · preview matched.", meta: ["URL or target scoped", "JSON-LD", "Visible preview"] },
+      { title: "Export and download", short: "Receive manifests and implementation files", icon: "⇩", body: "Export the eight-tool WebMCP catalog, download 16 URL-scoped synthetic files from page mode, or download 16 implementation-and-evidence files from prompt mode.", output: "Tool manifest and package ready for {target}; nothing was published.", meta: ["Eight tools", "16 files per package", "No site writes"] }
+    ];
+
+    const pageInput = document.getElementById("page-input");
+    const promptInput = document.getElementById("prompt-input");
+    const stepList = document.getElementById("step-list");
+    const stageCard = document.getElementById("stage-card");
+    const journeyState = document.getElementById("journey-state");
+    const progressFill = document.getElementById("progress-fill");
+    const playButton = document.getElementById("play-journey");
+    let activeStep = 0;
+    let timer = null;
+    let guideMode = "visibility";
+
+    const target = () => {
+      if (guideMode === "prompt") return `Brand prompt: ${promptInput.value.trim().slice(0, 54) || "selected prompt"}`;
+      try { const url = new URL(pageInput.value.trim()); return `${url.hostname}${url.pathname}`; }
+      catch { return pageInput.value.trim() || "selected page"; }
+    };
+    const interpolate = (value) => value.replaceAll("{target}", target());
+
+    function syncPersonalization() {
+      document.querySelectorAll("[data-target]").forEach((node) => node.textContent = target());
+      renderStage();
+    }
+
+    function renderSteps() {
+      stepList.innerHTML = steps.map((step, index) => `
+        <button class="step-button ${index === activeStep ? "active" : ""}" type="button" data-step="${index}" aria-current="${index === activeStep ? "step" : "false"}">
+          <span class="step-number">${String(index + 1).padStart(2, "0")}</span>
+          <span><b>${step.title}</b><small>${step.short}</small></span>
+        </button>`).join("");
+      stepList.querySelectorAll("[data-step]").forEach((button) => button.addEventListener("click", () => setStep(Number(button.dataset.step))));
+    }
+
+    function renderStage() {
+      const step = steps[activeStep];
+      stageCard.style.animation = "none";
+      stageCard.offsetHeight;
+      stageCard.style.animation = "";
+      stageCard.innerHTML = `
+        <span class="stage-icon" aria-hidden="true">${step.icon}</span>
+        <h3>${step.title}</h3>
+        <p>${step.body}</p>
+        <div class="stage-output"><b>Visible outcome</b><br>${interpolate(step.output)}</div>
+        <div class="stage-meta">${step.meta.map((item) => `<span>${item}</span>`).join("")}</div>`;
+      journeyState.textContent = `Step ${activeStep + 1} of ${steps.length}`;
+      progressFill.style.width = `${((activeStep + 1) / steps.length) * 100}%`;
+    }
+
+    function setStep(index) {
+      activeStep = (index + steps.length) % steps.length;
+      renderSteps();
+      renderStage();
+    }
+
+    function stopJourney() {
+      window.clearInterval(timer);
+      timer = null;
+      playButton.textContent = "▶ Play journey";
+      playButton.setAttribute("aria-pressed", "false");
+    }
+
+    function toggleJourney() {
+      if (timer) { stopJourney(); return; }
+      playButton.textContent = "Ⅱ Pause journey";
+      playButton.setAttribute("aria-pressed", "true");
+      timer = window.setInterval(() => setStep(activeStep + 1), 2800);
+    }
+
+    pageInput.addEventListener("input", syncPersonalization);
+    promptInput.addEventListener("input", syncPersonalization);
+    document.getElementById("previous-step").addEventListener("click", () => setStep(activeStep - 1));
+    document.getElementById("next-step").addEventListener("click", () => setStep(activeStep + 1));
+    playButton.addEventListener("click", toggleJourney);
+
+    document.querySelectorAll(".tab").forEach((tab) => tab.addEventListener("click", () => {
+      document.querySelectorAll(".tab").forEach((item) => { item.classList.remove("active"); item.setAttribute("aria-selected", "false"); });
+      document.querySelectorAll(".workflow-panel").forEach((panel) => panel.classList.remove("active"));
+      tab.classList.add("active");
+      tab.setAttribute("aria-selected", "true");
+      document.querySelector(`[data-panel="${tab.dataset.tab}"]`).classList.add("active");
+    }));
+
+    document.querySelectorAll("[data-guide-mode]").forEach((button) => button.addEventListener("click", () => {
+      document.querySelectorAll("[data-guide-mode]").forEach((item) => item.classList.remove("active"));
+      button.classList.add("active");
+      guideMode = button.dataset.guideMode;
+      const isPrompt = guideMode === "prompt";
+      document.getElementById("guide-visibility-fields").hidden = isPrompt;
+      document.getElementById("guide-prompt-fields").hidden = !isPrompt;
+      document.getElementById("guide-config-sub").textContent = isPrompt ? "Choose one curated prompt and use the button beside it. No URL, API key, or model field is used." : "Choose AI Visibility, enter one public page URL, and run it.";
+      document.getElementById("guide-run-button").textContent = isPrompt ? "Run prompt →" : "Run AI visibility →";
+      document.getElementById("guide-result-suffix").textContent = isPrompt ? "is ready to run without a URL." : "is ready for a synthetic demo.";
+      syncPersonalization();
+    }));
+
+    const observer = new IntersectionObserver((entries) => entries.forEach((entry) => {
+      if (entry.isIntersecting) entry.target.classList.add("visible");
+    }), { threshold: .12 });
+    document.querySelectorAll(".reveal").forEach((element) => observer.observe(element));
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+    renderSteps();
+    renderStage();
+  </script>
+</body>
+</html>
