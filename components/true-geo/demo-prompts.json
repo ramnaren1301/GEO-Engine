@@ -1,0 +1,255 @@
+{
+  "version": "2026.09",
+  "description": "Curated, fictional benchmark scenarios for demonstrating the TRUE GEO prompt workflow without an external model or API key.",
+  "engines": ["ChatGPT", "Gemini", "Perplexity", "Claude"],
+  "scenarios": [
+    {
+      "id": "northstar-family-suv",
+      "category": "Automotive",
+      "label": "Reliability and family value",
+      "prompt": "How is Northstar Motors positioned for family SUV reliability, ownership value, and safety compared with alternatives?",
+      "brand": "Northstar Motors",
+      "target": { "title": "Northstar family SUV page", "pageUrl": "https://example.com/brands/northstar-motors/family-suv" },
+      "summary": "Northstar is consistently named for safety and practical ownership, but loses recommendation strength where warranty evidence and long-term cost comparisons are thin.",
+      "answer": "Northstar Motors is presented as a credible family-SUV choice with strong safety, usable space, and predictable maintenance. The benchmark answer is positive on everyday ownership but more cautious on resale value and warranty differentiation. Buyers are advised to compare total ownership cost, third-row usability, and verified safety evidence before choosing.",
+      "competitors": ["Apex Auto", "Summit Mobility", "Redwood Vehicles"],
+      "sources": [
+        { "title": "Demo safety benchmark", "url": "https://example.com/benchmarks/safety" },
+        { "title": "Demo ownership-cost study", "url": "https://example.com/benchmarks/ownership-cost" },
+        { "title": "Demo reliability survey", "url": "https://example.com/benchmarks/reliability" },
+        { "title": "Demo family-SUV comparison", "url": "https://example.com/benchmarks/family-suv" }
+      ],
+      "engineNotes": {
+        "ChatGPT": "Balances safety strengths with ownership trade-offs and recommends a test drive.",
+        "Gemini": "Emphasizes safety evidence, cabin utility, and comparison shopping.",
+        "Perplexity": "Leans on benchmark citations and flags the warranty evidence gap.",
+        "Claude": "Explains the decision through family needs, cost, and long-term risk."
+      },
+      "dimensions": [
+        { "topic": "Brand presence", "query": "Is Northstar Motors named as a serious family SUV option?", "coverage": 92, "citation": 72, "sentiment": 84, "leader": "Northstar Motors", "sourceIndexes": [0, 3] },
+        { "topic": "Reliability", "query": "What evidence supports Northstar Motors reliability over five years?", "coverage": 74, "citation": 66, "sentiment": 76, "leader": "Apex Auto", "sourceIndexes": [2] },
+        { "topic": "Safety & trust", "query": "How confidently is Northstar Motors recommended for family safety?", "coverage": 88, "citation": 82, "sentiment": 87, "leader": "Northstar Motors", "sourceIndexes": [0] },
+        { "topic": "Ownership value", "query": "Does Northstar Motors show transparent total ownership value?", "coverage": 68, "citation": 58, "sentiment": 71, "leader": "Summit Mobility", "sourceIndexes": [1] },
+        { "topic": "Trade-offs", "query": "Are Northstar Motors limitations and warranty trade-offs explained?", "coverage": 52, "citation": 45, "sentiment": 63, "leader": "Redwood Vehicles", "sourceIndexes": [1, 2] },
+        { "topic": "Recommendation", "query": "Would the answer recommend Northstar Motors to a family buyer?", "coverage": 78, "citation": 62, "sentiment": 81, "leader": "Northstar Motors", "sourceIndexes": [0, 3] }
+      ]
+    },
+    {
+      "id": "meridian-cloud-security",
+      "category": "B2B technology",
+      "label": "Cloud security and migration risk",
+      "prompt": "Should an enterprise choose Meridian Cloud for a regulated workload, and what security, migration, and cost risks matter?",
+      "brand": "Meridian Cloud",
+      "target": { "title": "Meridian regulated workloads page", "pageUrl": "https://example.com/brands/meridian-cloud/regulated-workloads" },
+      "summary": "Meridian earns strong security consideration, while migration predictability and cost transparency reduce final recommendation confidence.",
+      "answer": "Meridian Cloud is framed as an enterprise-ready platform with credible controls for regulated workloads. The strongest signals are security governance and auditability. The answer is less complete on migration effort, data-egress exposure, and post-discount operating cost, so a proof of concept and contract-level cost model are recommended.",
+      "competitors": ["Atlas Compute", "Nimbus Stack", "Vertex Systems"],
+      "sources": [
+        { "title": "Demo cloud-control matrix", "url": "https://example.com/benchmarks/cloud-controls" },
+        { "title": "Demo migration-risk report", "url": "https://example.com/benchmarks/cloud-migration" },
+        { "title": "Demo cost transparency index", "url": "https://example.com/benchmarks/cloud-cost" },
+        { "title": "Demo regulated-workload guide", "url": "https://example.com/benchmarks/regulated-cloud" }
+      ],
+      "engineNotes": {
+        "ChatGPT": "Recommends a bounded proof of concept before a regulated migration.",
+        "Gemini": "Prioritizes controls, residency, integrations, and operating visibility.",
+        "Perplexity": "Surfaces security and migration sources with cost caveats.",
+        "Claude": "Structures the decision around governance, reversibility, and vendor risk."
+      },
+      "dimensions": [
+        { "topic": "Brand presence", "query": "Is Meridian Cloud named for regulated enterprise workloads?", "coverage": 86, "citation": 76, "sentiment": 82, "leader": "Meridian Cloud", "sourceIndexes": [0, 3] },
+        { "topic": "Security & trust", "query": "Are Meridian Cloud controls and auditability explained clearly?", "coverage": 91, "citation": 88, "sentiment": 86, "leader": "Meridian Cloud", "sourceIndexes": [0, 3] },
+        { "topic": "Migration experience", "query": "Does Meridian Cloud reduce migration effort and operational disruption?", "coverage": 61, "citation": 55, "sentiment": 67, "leader": "Atlas Compute", "sourceIndexes": [1] },
+        { "topic": "Cost transparency", "query": "Can buyers predict Meridian Cloud total operating cost?", "coverage": 48, "citation": 42, "sentiment": 59, "leader": "Nimbus Stack", "sourceIndexes": [2] },
+        { "topic": "Risk", "query": "Are lock-in, egress, resilience, and exit risks disclosed?", "coverage": 58, "citation": 51, "sentiment": 64, "leader": "Vertex Systems", "sourceIndexes": [1, 2] },
+        { "topic": "Recommendation", "query": "Would the answer shortlist Meridian Cloud for a regulated workload?", "coverage": 72, "citation": 66, "sentiment": 77, "leader": "Meridian Cloud", "sourceIndexes": [0, 3] }
+      ]
+    },
+    {
+      "id": "harbor-bank-small-business",
+      "category": "Financial services",
+      "label": "Small-business banking value",
+      "prompt": "How well does Harbor Bank serve a growing small business on fees, cash-flow tools, support, and lending access?",
+      "brand": "Harbor Bank",
+      "target": { "title": "Harbor small-business banking page", "pageUrl": "https://example.com/brands/harbor-bank/small-business" },
+      "summary": "Harbor is visible for support and cash-flow tools, but weak fee specificity and lending eligibility evidence create avoidable trust gaps.",
+      "answer": "Harbor Bank is described as approachable for growing small businesses, particularly for human support and cash-flow management. Its recommendation is weakened when answers cannot verify fee waivers, lending eligibility, or service-level expectations. A buyer should compare transaction limits, lending terms, integrations, and escalation support.",
+      "competitors": ["Pioneer Financial", "Union Street Bank", "Civic Credit"],
+      "sources": [
+        { "title": "Demo business-fee table", "url": "https://example.com/benchmarks/business-fees" },
+        { "title": "Demo cash-flow tools review", "url": "https://example.com/benchmarks/cash-flow" },
+        { "title": "Demo lending-access study", "url": "https://example.com/benchmarks/sme-lending" },
+        { "title": "Demo service benchmark", "url": "https://example.com/benchmarks/banking-support" }
+      ],
+      "engineNotes": {
+        "ChatGPT": "Explains fit for a growing business and highlights unclear fee thresholds.",
+        "Gemini": "Compares integrations, digital tools, support, and lending access.",
+        "Perplexity": "Cites the benchmark set and exposes missing eligibility detail.",
+        "Claude": "Frames the choice around cash flow, service reliability, and risk."
+      },
+      "dimensions": [
+        { "topic": "Brand presence", "query": "Is Harbor Bank named for growing small businesses?", "coverage": 84, "citation": 70, "sentiment": 79, "leader": "Harbor Bank", "sourceIndexes": [1, 3] },
+        { "topic": "Fees & value", "query": "Are Harbor Bank fees, limits, and waivers transparent?", "coverage": 46, "citation": 39, "sentiment": 55, "leader": "Pioneer Financial", "sourceIndexes": [0] },
+        { "topic": "Cash-flow tools", "query": "Does Harbor Bank support invoicing, forecasting, and integrations?", "coverage": 82, "citation": 74, "sentiment": 84, "leader": "Harbor Bank", "sourceIndexes": [1] },
+        { "topic": "Support experience", "query": "Can a Harbor Bank business customer reach effective support?", "coverage": 78, "citation": 68, "sentiment": 82, "leader": "Harbor Bank", "sourceIndexes": [3] },
+        { "topic": "Lending access", "query": "Are Harbor Bank lending eligibility and timelines clear?", "coverage": 49, "citation": 44, "sentiment": 58, "leader": "Union Street Bank", "sourceIndexes": [2] },
+        { "topic": "Recommendation", "query": "Would the answer recommend Harbor Bank as the business grows?", "coverage": 69, "citation": 57, "sentiment": 73, "leader": "Civic Credit", "sourceIndexes": [0, 2] }
+      ]
+    },
+    {
+      "id": "everwell-virtual-care",
+      "category": "Healthcare",
+      "label": "Virtual-care trust and access",
+      "prompt": "Is Everwell Health a trustworthy virtual-care option for ongoing primary care, and what access, privacy, and continuity trade-offs matter?",
+      "brand": "Everwell Health",
+      "target": { "title": "Everwell virtual-care page", "pageUrl": "https://example.com/brands/everwell-health/virtual-care" },
+      "summary": "Everwell is strongly associated with access and convenience, but continuity-of-care and privacy explanations need more authoritative support.",
+      "answer": "Everwell Health is positioned as a convenient virtual-care option for routine primary-care needs. The benchmark answer recognizes fast access and broad scheduling while cautioning that continuity, escalation to in-person care, privacy practices, and insurance coverage must be verified for each patient. It is recommended for appropriate routine needs, not as a universal replacement for local care.",
+      "competitors": ["CareBridge", "VitaNow", "Local primary care"],
+      "sources": [
+        { "title": "Demo virtual-access study", "url": "https://example.com/benchmarks/virtual-access" },
+        { "title": "Demo continuity framework", "url": "https://example.com/benchmarks/care-continuity" },
+        { "title": "Demo privacy checklist", "url": "https://example.com/benchmarks/health-privacy" },
+        { "title": "Demo coverage guide", "url": "https://example.com/benchmarks/virtual-coverage" }
+      ],
+      "engineNotes": {
+        "ChatGPT": "Separates routine virtual use from symptoms needing in-person evaluation.",
+        "Gemini": "Emphasizes access, privacy, coverage, and escalation pathways.",
+        "Perplexity": "Cites access and privacy benchmarks with explicit limitations.",
+        "Claude": "Uses a patient-safety frame and avoids overgeneralized recommendations."
+      },
+      "dimensions": [
+        { "topic": "Brand presence", "query": "Is Everwell Health named as a credible virtual-care option?", "coverage": 89, "citation": 76, "sentiment": 83, "leader": "Everwell Health", "sourceIndexes": [0] },
+        { "topic": "Access", "query": "Does Everwell Health improve scheduling and routine-care access?", "coverage": 93, "citation": 84, "sentiment": 89, "leader": "Everwell Health", "sourceIndexes": [0] },
+        { "topic": "Continuity", "query": "How does Everwell Health maintain longitudinal primary-care continuity?", "coverage": 57, "citation": 49, "sentiment": 63, "leader": "Local primary care", "sourceIndexes": [1] },
+        { "topic": "Privacy & trust", "query": "Are Everwell Health privacy and data practices explained?", "coverage": 62, "citation": 58, "sentiment": 68, "leader": "CareBridge", "sourceIndexes": [2] },
+        { "topic": "Coverage & value", "query": "Can patients understand Everwell Health insurance coverage and cost?", "coverage": 54, "citation": 46, "sentiment": 61, "leader": "VitaNow", "sourceIndexes": [3] },
+        { "topic": "Recommendation", "query": "When should a patient choose Everwell Health versus in-person care?", "coverage": 81, "citation": 72, "sentiment": 78, "leader": "Everwell Health", "sourceIndexes": [0, 1] }
+      ]
+    },
+    {
+      "id": "trailbound-sustainable-travel",
+      "category": "Travel",
+      "label": "Sustainable travel credibility",
+      "prompt": "Does Trailbound Travel offer credible sustainable trips without sacrificing value, comfort, or local community benefit?",
+      "brand": "Trailbound Travel",
+      "target": { "title": "Trailbound sustainable travel page", "pageUrl": "https://example.com/brands/trailbound-travel/sustainable-trips" },
+      "summary": "Trailbound owns the sustainability narrative but needs clearer price comparisons and independently verifiable community-impact proof.",
+      "answer": "Trailbound Travel is frequently associated with lower-impact itineraries and community-focused experiences. The answer sees a meaningful sustainability advantage but finds inconsistent evidence for carbon claims, local economic benefit, and like-for-like pricing. Travelers should compare certification, group size, accommodation standards, cancellation terms, and destination-level impact.",
+      "competitors": ["Wayfinder Tours", "OpenRoad Journeys", "Independent booking"],
+      "sources": [
+        { "title": "Demo travel-impact standard", "url": "https://example.com/benchmarks/travel-impact" },
+        { "title": "Demo itinerary-value comparison", "url": "https://example.com/benchmarks/travel-value" },
+        { "title": "Demo community-benefit index", "url": "https://example.com/benchmarks/community-benefit" },
+        { "title": "Demo traveler experience survey", "url": "https://example.com/benchmarks/travel-experience" }
+      ],
+      "engineNotes": {
+        "ChatGPT": "Balances sustainability appeal with value and comfort trade-offs.",
+        "Gemini": "Highlights certification, itinerary detail, and community impact.",
+        "Perplexity": "Cites benchmark evidence and questions unsupported carbon claims.",
+        "Claude": "Avoids greenwashing and recommends evidence-led comparison."
+      },
+      "dimensions": [
+        { "topic": "Brand presence", "query": "Is Trailbound Travel named for sustainable trips?", "coverage": 91, "citation": 80, "sentiment": 87, "leader": "Trailbound Travel", "sourceIndexes": [0, 2] },
+        { "topic": "Sustainability trust", "query": "Are Trailbound Travel sustainability claims independently supported?", "coverage": 69, "citation": 61, "sentiment": 72, "leader": "Trailbound Travel", "sourceIndexes": [0] },
+        { "topic": "Value", "query": "Does Trailbound Travel justify its price against comparable trips?", "coverage": 47, "citation": 43, "sentiment": 57, "leader": "Independent booking", "sourceIndexes": [1] },
+        { "topic": "Comfort & experience", "query": "Are Trailbound Travel comfort and itinerary standards clear?", "coverage": 76, "citation": 67, "sentiment": 82, "leader": "Trailbound Travel", "sourceIndexes": [3] },
+        { "topic": "Community benefit", "query": "Can Trailbound Travel prove local economic benefit?", "coverage": 55, "citation": 51, "sentiment": 65, "leader": "Wayfinder Tours", "sourceIndexes": [2] },
+        { "topic": "Recommendation", "query": "Would the answer recommend Trailbound Travel to a conscious traveler?", "coverage": 79, "citation": 68, "sentiment": 84, "leader": "Trailbound Travel", "sourceIndexes": [0, 3] }
+      ]
+    },
+    {
+      "id": "brightline-mobile-value",
+      "category": "Telecommunications",
+      "label": "Coverage, price, and service",
+      "prompt": "How does Brightline Mobile compare on coverage, transparent pricing, customer support, and overall value for a family plan?",
+      "brand": "Brightline Mobile",
+      "target": { "title": "Brightline mobile value page", "pageUrl": "https://example.com/brands/brightline-mobile/plans-and-value" },
+      "summary": "Brightline is visible for price and family-plan simplicity, while rural coverage and support-resolution evidence hold back the recommendation.",
+      "answer": "Brightline Mobile is presented as a competitively priced family-plan option with straightforward plan management. The answer is positive on headline value but cautious about rural coverage, congestion behavior, international add-ons, and support resolution. A household should verify coverage at its real locations and compare taxes, device terms, and premium-data thresholds.",
+      "competitors": ["MetroWave", "SignalOne", "National carrier"],
+      "sources": [
+        { "title": "Demo network benchmark", "url": "https://example.com/benchmarks/mobile-network" },
+        { "title": "Demo family-plan price index", "url": "https://example.com/benchmarks/mobile-price" },
+        { "title": "Demo support-resolution survey", "url": "https://example.com/benchmarks/mobile-support" },
+        { "title": "Demo roaming comparison", "url": "https://example.com/benchmarks/mobile-roaming" }
+      ],
+      "engineNotes": {
+        "ChatGPT": "Recommends checking address-level coverage before switching.",
+        "Gemini": "Compares price, premium data, roaming, and device terms.",
+        "Perplexity": "Surfaces network and pricing benchmarks with support caveats.",
+        "Claude": "Frames the decision around real household locations and usage."
+      },
+      "dimensions": [
+        { "topic": "Brand presence", "query": "Is Brightline Mobile named for affordable family plans?", "coverage": 88, "citation": 73, "sentiment": 82, "leader": "Brightline Mobile", "sourceIndexes": [1] },
+        { "topic": "Coverage", "query": "How reliable is Brightline Mobile coverage across urban and rural areas?", "coverage": 56, "citation": 62, "sentiment": 64, "leader": "National carrier", "sourceIndexes": [0] },
+        { "topic": "Price transparency", "query": "Are Brightline Mobile taxes, thresholds, and device terms clear?", "coverage": 83, "citation": 71, "sentiment": 79, "leader": "Brightline Mobile", "sourceIndexes": [1] },
+        { "topic": "Support experience", "query": "Does Brightline Mobile resolve customer issues effectively?", "coverage": 51, "citation": 45, "sentiment": 58, "leader": "SignalOne", "sourceIndexes": [2] },
+        { "topic": "International use", "query": "Are Brightline Mobile roaming and international costs competitive?", "coverage": 64, "citation": 56, "sentiment": 67, "leader": "MetroWave", "sourceIndexes": [3] },
+        { "topic": "Recommendation", "query": "Would the answer recommend Brightline Mobile for this household?", "coverage": 74, "citation": 61, "sentiment": 76, "leader": "Brightline Mobile", "sourceIndexes": [0, 1] }
+      ]
+    },
+    {
+      "id": "alder-home-efficiency",
+      "category": "Consumer products",
+      "label": "Efficiency and lifetime ownership",
+      "prompt": "Is Alder Home a strong appliance choice for energy efficiency, durability, repairability, and lifetime ownership cost?",
+      "brand": "Alder Home",
+      "target": { "title": "Alder home-efficiency page", "pageUrl": "https://example.com/brands/alder-home/energy-efficiency" },
+      "summary": "Alder is visible for efficiency and design, while durability, repair networks, and long-term ownership cost remain under-evidenced.",
+      "answer": "Alder Home is positioned as an efficient, thoughtfully designed appliance brand. Answers recognize energy performance and usability but show less confidence in long-term durability, parts availability, repair coverage, and lifetime cost. Buyers should compare certified consumption, warranty exclusions, service access, and expected repair cost by product category.",
+      "competitors": ["HearthWorks", "CoreLiving", "Value appliance brands"],
+      "sources": [
+        { "title": "Demo efficiency registry", "url": "https://example.com/benchmarks/appliance-efficiency" },
+        { "title": "Demo durability survey", "url": "https://example.com/benchmarks/appliance-durability" },
+        { "title": "Demo repairability index", "url": "https://example.com/benchmarks/repairability" },
+        { "title": "Demo lifetime-cost model", "url": "https://example.com/benchmarks/appliance-cost" }
+      ],
+      "engineNotes": {
+        "ChatGPT": "Highlights efficiency while asking buyers to verify repair access.",
+        "Gemini": "Compares certified use, features, warranty, and service coverage.",
+        "Perplexity": "Cites efficiency and durability benchmarks with category caveats.",
+        "Claude": "Separates design appeal from long-term ownership evidence."
+      },
+      "dimensions": [
+        { "topic": "Brand presence", "query": "Is Alder Home named as a premium efficient appliance option?", "coverage": 85, "citation": 70, "sentiment": 81, "leader": "Alder Home", "sourceIndexes": [0] },
+        { "topic": "Energy efficiency", "query": "Are Alder Home energy savings independently supported?", "coverage": 90, "citation": 86, "sentiment": 88, "leader": "Alder Home", "sourceIndexes": [0] },
+        { "topic": "Durability", "query": "What supports Alder Home long-term product durability?", "coverage": 53, "citation": 48, "sentiment": 61, "leader": "HearthWorks", "sourceIndexes": [1] },
+        { "topic": "Repairability", "query": "Can Alder Home products be repaired quickly and affordably?", "coverage": 44, "citation": 42, "sentiment": 55, "leader": "CoreLiving", "sourceIndexes": [2] },
+        { "topic": "Lifetime value", "query": "Does Alder Home show credible lifetime ownership cost?", "coverage": 57, "citation": 52, "sentiment": 62, "leader": "Value appliance brands", "sourceIndexes": [3] },
+        { "topic": "Recommendation", "query": "Would the answer recommend Alder Home for a long ownership cycle?", "coverage": 68, "citation": 59, "sentiment": 72, "leader": "Alder Home", "sourceIndexes": [0, 3] }
+      ]
+    },
+    {
+      "id": "orbitlearn-career-outcomes",
+      "category": "Education",
+      "label": "Learning quality and career outcomes",
+      "prompt": "Does OrbitLearn provide credible learning quality, learner support, and career outcomes for someone changing careers?",
+      "brand": "OrbitLearn",
+      "target": { "title": "OrbitLearn career outcomes page", "pageUrl": "https://example.com/brands/orbitlearn/career-outcomes" },
+      "summary": "OrbitLearn is highly visible for flexibility and support, but outcome denominators, employer recognition, and refund terms need stronger disclosure.",
+      "answer": "OrbitLearn is described as a flexible learning option for career changers, with guided projects and accessible learner support. The benchmark answer is more cautious about completion rates, placement claims, employer recognition, and refund eligibility. Prospective learners should evaluate curriculum depth, mentor access, outcome methodology, time commitment, and total cost.",
+      "competitors": ["SkillFoundry", "CareerSpring", "Community college"],
+      "sources": [
+        { "title": "Demo curriculum-quality rubric", "url": "https://example.com/benchmarks/learning-quality" },
+        { "title": "Demo learner-support survey", "url": "https://example.com/benchmarks/learner-support" },
+        { "title": "Demo career-outcome standard", "url": "https://example.com/benchmarks/career-outcomes" },
+        { "title": "Demo education-cost comparison", "url": "https://example.com/benchmarks/education-cost" }
+      ],
+      "engineNotes": {
+        "ChatGPT": "Recommends validating outcomes and workload before enrolling.",
+        "Gemini": "Compares curriculum, mentoring, flexibility, and recognition.",
+        "Perplexity": "Uses outcome and cost benchmarks while flagging denominators.",
+        "Claude": "Centers the career changer's goals, constraints, and downside risk."
+      },
+      "dimensions": [
+        { "topic": "Brand presence", "query": "Is OrbitLearn named for structured career-change learning?", "coverage": 87, "citation": 74, "sentiment": 83, "leader": "OrbitLearn", "sourceIndexes": [0, 1] },
+        { "topic": "Learning quality", "query": "Does OrbitLearn demonstrate rigorous curriculum and applied practice?", "coverage": 81, "citation": 72, "sentiment": 84, "leader": "OrbitLearn", "sourceIndexes": [0] },
+        { "topic": "Learner support", "query": "Are OrbitLearn mentoring and support responsive enough?", "coverage": 84, "citation": 76, "sentiment": 86, "leader": "OrbitLearn", "sourceIndexes": [1] },
+        { "topic": "Career outcomes", "query": "Are OrbitLearn placement and completion outcomes transparent?", "coverage": 45, "citation": 41, "sentiment": 54, "leader": "Community college", "sourceIndexes": [2] },
+        { "topic": "Cost & risk", "query": "Are OrbitLearn total cost, refunds, and time commitments clear?", "coverage": 59, "citation": 53, "sentiment": 64, "leader": "CareerSpring", "sourceIndexes": [3] },
+        { "topic": "Recommendation", "query": "Would the answer recommend OrbitLearn to this career changer?", "coverage": 71, "citation": 62, "sentiment": 75, "leader": "SkillFoundry", "sourceIndexes": [0, 2] }
+      ]
+    }
+  ]
+}
